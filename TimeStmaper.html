@@ -1,0 +1,102 @@
+<html>
+<body>
+    <audio id="audio" controls preload='auto'>
+        <source id="title" src="Audio/file_example_MP3_700KB.mp3" type="audio/mp3">
+    </audio>
+    <div>
+        <button type="button">Załaduj plik mp3</button>
+        <button onclick="audioLength()" type="button">Pokaz dlugosc audio</button>
+        <button onclick="Pause()" type="button">Pauza</button>
+        <button onclick="PlayAudio()" type="button">Graj</button>
+        <button id="yourBtn" onclick="Reload()" type="button">Resetuj</button>
+        <button type="button" onclick="getCurTime()">Dodaj Time Stampa</button>
+        <button id="btnSave" class="button1" onclick="Save()" id="button1" type="button">Zapisz Time Stampy</button>
+    </div>
+
+    <form>
+        <h5 style="color:white">Time Stamps</h5>
+        <select id="mySelect" size="8">
+        </select>
+    </form>
+
+    <form>
+        <h5 style="color:white">Delta</h5>
+        <select id="Delta" size="8">
+        </select>
+    </form>
+
+    <style>
+        body {
+            background-color: #373737;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var vid = document.getElementById("audio");
+
+        function audioLength() {
+            alert("Długośc trwania audio => " + vid.duration);
+        }
+
+        function getCurTime() {
+            var x = document.getElementById("mySelect");
+            var option = document.createElement("option");
+            option.text = vid.currentTime;
+            x.add(option);
+
+            var e = document.getElementById("Delta");
+            var option = document.createElement("option");
+
+            var length = document.getElementById("mySelect").options.length;
+
+
+            if (length > 1 && length % 2 == 0) {
+                for (let i = 0; i < length; i = i + 2) {
+                    var first = document.getElementById("mySelect").options[i].value;
+                    var second = document.getElementById("mySelect").options[i + 1].value;
+                    var delta = second - first;
+                    option.text = delta;
+                    e.add(option);
+                }
+            }
+        }
+        function Pause() {
+            vid.pause();
+        }
+        function PlayAudio() {
+            vid.play();
+        }
+
+        function Reload() {
+            vid.load();
+            document.location.reload(true);
+        }
+        function Save() {
+            const timeStamps = ["Nasze time stampy"];
+            var x = document.getElementById("mySelect");
+            var txt = "Time Stamps: ";
+            var i;
+            for (i = 0; i < x.length; i++) {
+                txt = x.options[i].text;
+                timeStamps.push(txt);
+            }
+            var textDoc = document.createElement('a');
+
+            var title = document.getElementById("title").src;
+            console.log(title);
+            textDoc.href = 'data:attachment/text,' + encodeURI(timeStamps.join('\n'));
+            textDoc.target = '_blank';
+            textDoc.download = title+'.txt';
+            textDoc.click();
+        }
+
+        function download(content, fileName, contentType) {
+                var a = document.createElement("a");
+                var file = new Blob([content], {type: contentType});
+                a.href = URL.createObjectURL(file);
+                a.download = fileName;
+                a.click();
+            }
+    </script>
+</body>
+</html>
