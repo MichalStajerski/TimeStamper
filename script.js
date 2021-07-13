@@ -1,14 +1,12 @@
 const recorder = document.getElementById('recorder');
-            const player = document.getElementById('audio');
-          
-            recorder.addEventListener('change', function(e) {
-              const file = e.target.files[0];
-              const url = URL.createObjectURL(file);
-              // Do something with the audio file.
-              player.src = url;
-            });
-      
-
+const player = document.getElementById('audio');
+recorder.addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  const url = URL.createObjectURL(file);
+  // Do something with the audio file.
+  player.src = url;
+});       
+            
 var vid = document.getElementById("audio");
 
 function audioLength() {
