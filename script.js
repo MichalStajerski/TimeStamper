@@ -11,7 +11,7 @@ function getCurTime () {
   x.add(option)
 
   const e = document.getElementById('Delta')
-  var option = document.createElement('option')
+  //var option = document.createElement('option')
 
   const length = document.getElementById('mySelect').options.length
 
